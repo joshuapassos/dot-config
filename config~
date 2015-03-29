@@ -23,13 +23,16 @@ font pango:DejaVu Sans Mono 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-exec gnome-session
+#exec gnome-session
 exec gnome-settings-daemon
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec --no-startup-id udisks-glue
-#exec --no-startup-id export $(gnome-keyring-daemon)
+#exec /usr/libexec/gnome-settings-daemon
 
+exec --no-startup-id nm-applet
+#exec --no-startup-id blueman-applet
+#exec --no-startup-id udisks-glue
+#exec --no-startup-id export $(gnome-keyring-daemon)
+#exec startxfce4
+exec ~/.screenlayout/josh.sh
 
 # volume control (Alt + F2 or Alt + F3)
 bindcode $mod+95 exec  amixer -D pulse sset Master 5%-
@@ -140,6 +143,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
+
+
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
