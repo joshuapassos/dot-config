@@ -23,31 +23,33 @@ font pango:DejaVu Sans Mono 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-#exec gnome-session
+exec gnome-session-classic
 exec gnome-settings-daemon
 #exec /usr/libexec/gnome-settings-daemon
 
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 #exec --no-startup-id blueman-applet
 #exec --no-startup-id udisks-glue
-#exec --no-startup-id export $(gnome-keyring-daemon)
+exec --no-startup-id export $(gnome-keyring-daemon)
 #exec startxfce4
-exec ~/.screenlayout/josh.sh
-exec ntpdate pool.ntp.org
-
-# volume control (Alt + F2 or Alt + F3)
-bindcode $mod+95 exec  amixer -D pulse sset Master 5%-
-bindcode $mod+96 exec amixer -D pulse sset Master 5%+
-
-# brightness control (Alt + F11 or Alt + F12)
-bindcode $mod+70 exec xbacklight - 10
-bindcode $mod+71 exec xbacklight + 10
+#exec ~/.screenlayout/josh.sh
+#exec ntpdate pool.ntp.org
 
 
 
+# volume control
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# brightness control
+bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5
+bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 10
+
+#Screenshot control 
+bindsym Print exec gnome-screenshot
 
 
-exec --no-startup-id feh --bg-scale /home/joshua/Pictures/Wallpapers/walpapper.jpg
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
