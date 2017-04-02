@@ -9,47 +9,54 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4	
+
+
+
+
+# Carregar as paradas principais
+exec gnome-session
+exec /opt/Telegram/Telegram
+exec slack
+exec bash ~/desativatouch.sh
+exec bash ~/screen.sh
+exec bash ~/mouse.sh
+
+# volume control funcionando
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym $mod+F11  exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ -5%
+bindsym $mod+F12 exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym $mod+F10  exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+
+# brightness control n funfa
+bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5
+bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 10
+
+
+#Print Screen
+bindsym Print exec gnome-screenshot
+
+
+
+set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
+font pango:monospace 8
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+#font pango:DejaVu Sans Mono 8
+
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
-
-exec gnome-session-classic
-exec gnome-settings-daemon
-#exec /usr/libexec/gnome-settings-daemon
-
-#exec --no-startup-id nm-applet
-#exec --no-startup-id blueman-applet
-#exec --no-startup-id udisks-glue
-exec --no-startup-id export $(gnome-keyring-daemon)
-#exec startxfce4
-#exec ~/.screenlayout/josh.sh
-#exec ntpdate pool.ntp.org
-
-
-
-# volume control
-bindsym XF86AudioLowerVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioRaiseVolume exec /usr/bin/pactl -- set-sink-volume @DEFAULT_SINK@ '+5%'
-bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-# brightness control
-bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5
-bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 10
-
-#Screenshot control 
-bindsym Print exec gnome-screenshot
-
-
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -71,7 +78,7 @@ bindsym $mod+d exec dmenu_run
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+ccedilla focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -83,7 +90,7 @@ bindsym $mod+Right focus right
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+ccedilla move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -98,7 +105,7 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
+bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -146,8 +153,6 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-
-
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
@@ -161,7 +166,7 @@ mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym ccedilla resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
