@@ -1,0 +1,61 @@
+#!/usr/bin/python -u
+
+import sys, getopt, dbus
+from subprocess import Popen, PIPE
+
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv,"h:",["help","status","play","pause",
+                                              "playpause","next","prev","previous",
+                                              "volumeup","volumedown"])
+    except getopt.GetoptError:
+        show_help()
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):             show_help()
+        elif opt == "--status":                 show_current_song()
+        elif opt == "--play":                   perform_spotify_action("Play")
+        elif opt == "--pause":                  perform_spotify_action("Pause")
+        elif opt == "--playpause":              perform_spotify_action("PlayPause")
+        elif opt == "--next":                   perform_spotify_action("Next")
+        elif opt in ("--prev", "--previous"):   perform_spotify_action("Previous")
+        elif opt == "--volumeup":               control_volume("+5%")
+        elif opt == "--volumedown":             control_volume("-5%")
+
+
+def show_help():
+    print ('\n  spotify-cli is a command line interface for Spotify on Linux\n\n' \
+          '  usage:\n' \
+          '    --help, -h\t\tshows help\n' \
+          '    --status\t\tshows status (currently played song name and artist)\n' \
+          '    --play\t\tplays the song\n' \
+          '    --pause\t\tpauses the song\n' \
+          '    --playpause\t\tplays or pauses the song (toggles a state)\n' \
+          '    --next\t\tplays the next song\n' \
+          '    --previous, --prev\tplays the previous song\n' \
+          '    --volumeup\t\tincreases sound volume\n' \
+          '    --volumedown\tdecreases sound volume\n') \
+
+def show_current_song():
+    try:
+        session_bus = dbus.SessionBus()
+        spotify_bus = session_bus.get_object("org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2")
+        spotify_properties = dbus.Interface(spotify_bus, "org.freedesktop.DBus.Properties")
+        metadata = spotify_properties.Get("org.mpris.MediaPlayer2.Player", "Metadata")
+
+        title = metadata['xesam:title'][:45] + (metadata['xesam:title'][10:] and '')
+        artist = metadata['xesam:artist'][0][:15] + (metadata['xesam:artist'][0][15:] and '...')
+        print ("%s - %s" % (artist, title))
+    except:
+        # we go here when spotify is turned off, not installed or we cannot access dbus
+        print ("spotify is off")
+
+def perform_spotify_action(spotifyCommand):
+    Popen('dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify ' \
+    '/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player."%s"' % spotifyCommand, shell=True, stdout=PIPE)
+
+def control_volume(volumePercent):
+    Popen('pactl set-sink-volume 0 "%s"' % volumePercent, shell=True, stdout=PIPE)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
