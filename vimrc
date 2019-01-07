@@ -4,6 +4,8 @@
 call plug#begin('~/.vim/plugged')
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nmap <C-p> :FZF<cr>
+map <F9> :bprevious<CR>
+map <F10> :bnext<CR>
 Plug 'dyng/ctrlsf.vim'
 " Make sure you use single quotes
 
@@ -53,7 +55,7 @@ nnoremap <C-Left> :tabp<CR>
 nnoremap <C-Right> :tabn<CR>
 nnoremap <C-N> :tabnew<CR>
 nnoremap <C-Q> :q<CR>
-nnoremap <C-B> :NERDTreeFocusToggle<CR>
+nnoremap <C-B> :NERDTreeToggle<CR>
 
 set t_Co=256
 set termguicolors
