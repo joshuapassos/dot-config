@@ -14,6 +14,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+Plug 'wakatime/vim-wakatime'
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -111,7 +112,7 @@ hi GitGutterChange ctermbg=32 ctermfg=White guifg=#FFFFFF guibg=#2980B9 cterm=Bo
 " TypeScript
 let g:tsuquyomi_completion_detail = 1
 let g:syntastic_typescript_tsc_fname = ''
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
 let g:tsuquyomi_disable_quickfix = 1
 
 " Mouse support
@@ -120,28 +121,28 @@ if has('mouse')
 endif
 
 
-augroup tslint
-  function! s:typescript_after(ch, msg)
-    let cnt = len(getqflist())
-    if cnt > 0
-      echomsg printf('[Tslint] %s errors', cnt)
-    endif
-  endfunction
-  let g:tslint_callbacks = {
-    \ 'after_run': function('s:typescript_after')
-    \ }
+" augroup tslint
+"  function! s:typescript_after(ch, msg)
+"    let cnt = len(getqflist())
+"    if cnt > 0
+"      echomsg printf('[Tslint] %s errors', cnt)
+"    endif
+"  endfunction
+"  let g:tslint_callbacks = {
+"    \ 'after_run': function('s:typescript_after')
+"    \ }
 
-  let g:tsuquyomi_disable_quickfix = 1
+"  let g:tsuquyomi_disable_quickfix = 1
 
-  function! s:ts_quickfix()
-    let winid = win_getid()
-    execute ':TsuquyomiGeterr'
-    call tslint#run('a', winid)
-  endfunction
+"  function! s:ts_quickfix()
+"    let winid = win_getid()
+"    execute ':TsuquyomiGeterr'
+"    call tslint#run('a', winid)
+"  endfunction
 
-  autocmd BufWritePost *.ts,*.tsx silent! call s:ts_quickfix()
-  autocmd InsertLeave *.ts,*.tsx silent! call s:ts_quickfix()
-augroup END
+"  autocmd BufWritePost *.ts,*.tsx silent! call s:ts_quickfix()
+"  autocmd InsertLeave *.ts,*.tsx silent! call s:ts_quickfix()
+"augroup END
 
 
 " Tabs
@@ -168,6 +169,7 @@ Plug 'jason0x43/vim-js-indent'
 Plug 'Quramy/vim-dtsm'
 Plug 'mhartington/vim-typings'
 Plug 'Valloric/YouCompleteMe'
+Plug 'Quramy/tsuquyomi'
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'junegunn/fzf'
