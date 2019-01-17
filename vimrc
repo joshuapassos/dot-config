@@ -4,8 +4,8 @@
 call plug#begin('~/.vim/plugged')
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nmap <C-p> :FZF<cr>
-map <F9> :bprevious<CR>
-map <F10> :bnext<CR>
+map <F9> :bprevious!<CR>
+map <F10> :bnext!<CR>
 Plug 'dyng/ctrlsf.vim'
 " Make sure you use single quotes
 
@@ -55,7 +55,7 @@ let g:esearch = {
 nnoremap <C-Left> :tabp<CR>
 nnoremap <C-Right> :tabn<CR>
 nnoremap <C-N> :tabnew<CR>
-nnoremap <C-Q> :q<CR>
+nnoremap <C-Q> :bd<CR>
 nnoremap <C-B> :NERDTreeToggle<CR>
 
 set t_Co=256
@@ -110,10 +110,11 @@ hi GitGutterDelete ctermbg=161 ctermfg=White guifg=#FFFFFF guibg=#E74C3C cterm=B
 hi GitGutterChange ctermbg=32 ctermfg=White guifg=#FFFFFF guibg=#2980B9 cterm=Bold
 
 " TypeScript
-let g:tsuquyomi_completion_detail = 1
+" let g:tsuquyomi_completion_detail = 1
 let g:syntastic_typescript_tsc_fname = ''
-let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
-let g:tsuquyomi_disable_quickfix = 1
+let g:typescript_compiler_binary = 'tsc'
+let g:syntastic_typescript_checkers = ['tsc', 'tslint'] " You shouldn't use 'tsc' checker.
+"let g:tsuquyomi_disable_quickfix = 1
 
 " Mouse support
 if has('mouse')
@@ -169,7 +170,7 @@ Plug 'jason0x43/vim-js-indent'
 Plug 'Quramy/vim-dtsm'
 Plug 'mhartington/vim-typings'
 Plug 'Valloric/YouCompleteMe'
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'junegunn/fzf'
