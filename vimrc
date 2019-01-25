@@ -6,16 +6,17 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 nmap <C-p> :FZF<cr>
 map <F9> :bprevious!<CR>
 map <F10> :bnext!<CR>
+map <C-C> "+y<CR>
+let vim_markdown_preview_github=1
 Plug 'dyng/ctrlsf.vim'
 " Make sure you use single quotes
-
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'wakatime/vim-wakatime'
-
+Plug 'JamshedVesuna/vim-markdown-preview'
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -50,7 +51,6 @@ let g:esearch = {
   \ 'use':              ['visual', 'hlsearch', 'last'],
   \ 'default_mappings': 1,
   \}
-
 
 nnoremap <C-Left> :tabp<CR>
 nnoremap <C-Right> :tabn<CR>
@@ -100,6 +100,10 @@ command -nargs=0 -bar Update if &modified
 nnoremap <silent> <C-S> :<C-u>Update<CR>
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme='sol'
 
 " Git gutter symbols and colors
 let g:gitgutter_sign_added = '++'
