@@ -19,7 +19,8 @@ Plug 'wakatime/vim-wakatime'
 Plug 'JamshedVesuna/vim-markdown-preview'
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
+" To change between buffers with save 
+set hidden
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -113,12 +114,17 @@ hi GitGutterAdd ctermfg=34 ctermfg=White guifg=#FFFFFF guibg=#2ECC71 cterm=Bold
 hi GitGutterDelete ctermbg=161 ctermfg=White guifg=#FFFFFF guibg=#E74C3C cterm=Bold
 hi GitGutterChange ctermbg=32 ctermfg=White guifg=#FFFFFF guibg=#2980B9 cterm=Bold
 
+Plug 'w0rp/ale'
+
 " TypeScript
-" let g:tsuquyomi_completion_detail = 1
-let g:syntastic_typescript_tsc_fname = ''
-let g:typescript_compiler_binary = 'tsc'
-let g:syntastic_typescript_checkers = ['tsc', 'tslint'] " You shouldn't use 'tsc' checker.
-"let g:tsuquyomi_disable_quickfix = 1
+" let g:syntastic_typescript_tsc_fname = ''
+" let g:typescript_compiler_binary = 'tsc'
+" let g:syntastic_typescript_checkers = ['tsc', 'tslint'] " You shouldn't use 'tsc' checker.
+let b:ale_linters = ['tslint', 'tsserver']
+nnoremap <c-]> :ALEFindReferences<cr>
+nnoremap <c-G> :ALEGoToDefinition<cr>
+nnoremap K :ALEHover<cr>
+nnoremap <F3> :set hlsearch!<CR>
 
 " Mouse support
 if has('mouse')
@@ -198,6 +204,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
+Plug 'tomtom/tcomment_vim'
+map <C-\> :TComment<CR>
 " Initialize plugin system
 call plug#end()
 
